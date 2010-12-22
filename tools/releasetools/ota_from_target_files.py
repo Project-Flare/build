@@ -268,6 +268,10 @@ A/B OTA specific options
   --full_ota_partitions
       Specify list of partitions should be updated in full OTA fashion, even if
       an incremental OTA is about to be generated
+
+  --backup <boolean>
+      Enable or disable the execution of backuptool.sh.
+      Disabled by default.
 """
 
 from __future__ import print_function
@@ -342,6 +346,7 @@ OPTIONS.max_threads = None
 OPTIONS.vabc_cow_version = None
 OPTIONS.compression_factor = None
 OPTIONS.full_ota_partitions = None
+OPTIONS.backuptool = False
 
 
 POSTINSTALL_CONFIG = 'META/postinstall_config.txt'
@@ -1345,6 +1350,8 @@ def main(argv):
     elif o == "--full_ota_partitions":
       OPTIONS.full_ota_partitions = set(
           a.strip().strip("\"").strip("'").split(","))
+    elif o == "--backup":
+      OPTIONS.backuptool = True
     else:
       return False
     return True
@@ -1396,6 +1403,7 @@ def main(argv):
                                  "vabc_cow_version=",
                                  "compression_factor=",
                                  "full_ota_partitions=",
+                                 "backup=",
                              ], extra_option_handler=[option_handler, payload_signer.signer_options])
   common.InitLogging()
 
