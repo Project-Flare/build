@@ -215,6 +215,32 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("Target: {}".format(target_info.fingerprint))
 
   script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
+
+  date = target_info.GetBuildProp("ro.flare.build.date")
+  version = target_info.GetBuildProp("ro.flare.version")
+  maintainer = target_info.GetBuildProp("ro.flare.maintainer")
+
+  if target_info.GetBuildProp("ro.product.model") is not None:
+    model = target_info.GetBuildProp("ro.product.model")
+    script.Print("***********************************************");
+    script.Print("          Project Flare for %s"%(model));
+    script.Print("       Reborn from ashes of Project Blaze      ");
+    script.Print("               BY: Aditya Singh                ");
+    script.Print("   VERSION: %s"%(version));
+    script.Print("   MAINTAINED BY: %s"%(maintainer));
+    script.Print("   COMPILED ON: %s"%(date));
+    script.Print("***********************************************");
+  else:
+    name = target_info.GetBuildProp("ro.product.name")
+    script.Print("***********************************************");
+    script.Print("          Project Flare for %s"%(name));
+    script.Print("       Reborn from ashes of Project Blaze      ");
+    script.Print("               BY: Aditya Singh                ");
+    script.Print("   VERSION: %s"%(version));
+    script.Print("   MAINTAINED BY: %s"%(maintainer));
+    script.Print("   COMPILED ON: %s"%(date));
+    script.Print("***********************************************");
+
   device_specific.FullOTA_InstallBegin()
 
   CopyInstallTools(output_zip)
